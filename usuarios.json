@@ -1,0 +1,56 @@
+[
+    {
+        "id": "693b54a078aa5",
+        "nome": "BRENNO VENTURA",
+        "email": "thiagogomespsi73@gmail.com",
+        "senha": "$2y$10$gtAqw9V0oLsQb\/olJQnF7.x0qXW69oDv\/cXH6FEsh5lxUdvDZFMfO",
+        "tipo": "paciente",
+        "foto": "693b54a07887f.jpg",
+        "data_cadastro": "2025-12-12 00:32:48"
+    },
+    {
+        "id": "69834e1233974",
+        "nome": "Zoin Zoi\u00e3p",
+        "email": "zoin@gmail.com",
+        "senha": "$2y$10$HeyHl85OcpR2VQeDHL9lHu6fy3sDiekGRnI1YS5rD7Zc\/ItR1nbR.",
+        "tipo": "paciente",
+        "foto": "default.png",
+        "data_cadastro": "2026-02-04 13:48:02"
+    },
+    {
+        "id": "6983743c5a344",
+        "nome": "Thiago Oliveira",
+        "email": "thiagogomesstudent@gmail.com",
+        "senha": "$2y$10$a3GYB4njqP66xNZiUm8NW.Y6bCvTW48rIBen2UQ8otQT8WxyEpuy.",
+        "tipo": "paciente",
+        "foto": "default.png",
+        "data_cadastro": "2026-02-04 16:30:52"
+    },
+    {
+        "id": "698374e0db250",
+        "nome": "Thiago Oliveira",
+        "email": "thiago123@gmail.com",
+        "senha": "$2y$10$PL6MWo.nZ7f\/TJcIB7\/4jeTeJ68osq0xNjVZbq86XNgoWLsjgLLn.",
+        "tipo": "paciente",
+        "foto": "default.png",
+        "data_cadastro": "2026-02-04 16:33:36"
+    },
+    {
+        "id": "69837676bb876",
+        "nome": "Thiago Oliveira",
+        "email": "thiago89@gmail.com",
+        "senha": "$2y$10$RRbqZPHXSAuLjtORhsuF8OHxfgJkyG0dT3KLCDMW2bvHKyfg7kbyW",
+        "tipo": "paciente",
+        "foto": "default.png",
+        "data_cadastro": "2026-02-04 16:40:22"
+    },
+    {
+        "id": "6984c142d1b90",
+        "nome": "Thiago Oliveira",
+        "email": "thiagolol@gmail.com",
+        "senha": "$2y$10$FotFeKF6csh2ZL9j1FOmb.lu2BlBdCjMsLoYLe0oGifUWPo5AD8dK",
+        "tipo": "paciente",
+        "foto": "default.png",
+        "data_cadastro": "2026-02-05 16:11:46"
+    }
+]

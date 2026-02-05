@@ -1,0 +1,48 @@
+/* Estilos personalizados para o Conecta Saúde */
+:root {
+    --primary-color: #0077b6;
+    --secondary-color: #00b4d8;
+    --light-color: #e0f7fa;
+    --dark-color: #023e8a;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.jumbotron {
+    background: linear-gradient(135deg, var(--light-color), #ffffff);
+    border-left: 5px solid var(--primary-color);
+}
+
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-color);
+    border-color: var(--dark-color);
+}
+
+footer {
+    background-color: var(--dark-color);
+    color: white;
+    margin-top: 50px;
+}

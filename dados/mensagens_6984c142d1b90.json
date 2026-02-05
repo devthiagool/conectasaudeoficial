@@ -1,0 +1,18 @@
+[
+    {
+        "id": 2,
+        "remetente": "teste da tropa",
+        "assunto": "free fire",
+        "mensagem": "que issoooo?",
+        "data": "2026-02-05 17:08",
+        "lida": false
+    },
+    {
+        "id": 3,
+        "remetente": "allanbida",
+        "assunto": "do meu zovo",
+        "mensagem": "quero que lamba bem",
+        "data": "2026-02-05 17:26",
+        "lida": true
+    }
+]

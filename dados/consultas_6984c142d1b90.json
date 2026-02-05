@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "medico": "Dr. Carlos Silva",
+        "especialidade": "Cardiologia",
+        "data": "2026-02-25 15:00",
+        "tipo": "presencial",
+        "status": "agendado",
+        "motivo": "oi3epewlpdlwpdlwd",
+        "data_agendamento": "2026-02-05 16:29:23"
+    },
+    {
+        "id": 2,
+        "medico": "Dr. Carlos Silva",
+        "especialidade": "Cardiologia",
+        "data": "2026-02-16 09:00",
+        "tipo": "presencial",
+        "status": "agendado",
+        "motivo": "dor de cabe\u00e7a",
+        "data_agendamento": "2026-02-05 17:07:22"
+    },
+    {
+        "id": 3,
+        "medico": "Dr. Carlos Silva",
+        "especialidade": "Cardiologia",
+        "data": "2026-02-13 11:00",
+        "tipo": "presencial",
+        "status": "agendado",
+        "motivo": "dor de denteee",
+        "data_agendamento": "2026-02-05 17:25:33"
+    }
+]
