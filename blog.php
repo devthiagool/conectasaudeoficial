@@ -90,9 +90,9 @@ if (file_exists('conexao.php')) {
             } else {
                 // Dados de exemplo se não houver banco
                 $artigos = [
-                    ['id' => 1, 'titulo' => 'Importância do Check-up Anual', 'data' => '31/12/2025', 'resumo' => 'Saiba por que fazer check-up anual é essencial para prevenção.'],
-                    ['id' => 2, 'titulo' => 'Alimentação Saudável no Inverno', 'data' => '31/12/2025', 'resumo' => 'Dicas para manter uma alimentação balanceada nos dias frios.'],
-                    ['id' => 3, 'titulo' => 'Cuidados com a Saúde Mental', 'data' => '05/12/2025', 'resumo' => 'Como cuidar da saúde mental no dia a dia.'],
+                    ['id' => 1, 'titulo' => 'Importância do Check-up Anual', 'data' => '31/12/2026', 'resumo' => 'Saiba por que fazer check-up anual é essencial para prevenção.'],
+                    ['id' => 2, 'titulo' => 'Alimentação Saudável no Inverno', 'data' => '31/12/2026', 'resumo' => 'Dicas para manter uma alimentação balanceada nos dias frios.'],
+                    ['id' => 3, 'titulo' => 'Cuidados com a Saúde Mental', 'data' => '05/12/2026', 'resumo' => 'Como cuidar da saúde mental no dia a dia.'],
                 ];
                 
                 foreach($artigos as $artigo) {

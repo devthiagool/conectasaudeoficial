@@ -64,7 +64,7 @@ $titulo = "Sobre Nós - Conecta Saúde";
     <section class="hero-sobre text-center">
         <div class="container">
             <h1 class="display-4 fw-bold">Sobre o Conecta Saúde</h1>
-            <p class="lead">Revolucionando o acesso à saúde no Brasil desde 2025</p>
+            <p class="lead">Revolucionando o acesso à saúde no Brasil desde 2026</p>
         </div>
     </section>
     
@@ -127,7 +127,7 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 <div class="col-lg-6">
                     <h2 class="text-primary mb-4">Nossa História</h2>
                     <p class="lead">
-                        O Conecta Saúde nasceu em 2025 da necessidade de simplificar o acesso à saúde no Brasil.
+                        O Conecta Saúde nasceu em 2026 da necessidade de simplificar o acesso à saúde para agentes comunitárias em Pacajus.
                     </p>
                     <p>
                         Fundada por um grupo de alunos, nossa plataforma foi criada para 
@@ -155,19 +155,19 @@ $titulo = "Sobre Nós - Conecta Saúde";
         <h2 class="text-center text-primary mb-5">Nossos Números</h2>
         <div class="row text-center">
             <div class="col-md-3 mb-4">
-                <div class="counter" data-count="1500">0</div>
+                <div class="counter" data-count="100">0</div>
                 <p class="text-muted">Pacientes Atendidos</p>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="counter" data-count="200">0</div>
+                <div class="counter" data-count="10">0</div>
                 <p class="text-muted">Profissionais Cadastrados</p>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="counter" data-count="5000">0</div>
+                <div class="counter" data-count="100">0</div>
                 <p class="text-muted">Consultas Realizadas</p>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="counter" data-count="25">0</div>
+                <div class="counter" data-count="1">0</div>
                 <p class="text-muted">Cidades Atendidas</p>
             </div>
         </div>
@@ -181,13 +181,13 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 <!-- Thiago Oliveira -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card team-card border-0 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                        <img src="" 
                              class="card-img-top team-img" 
-                             alt="Thiago Oliveira">
+                             alt="Foto">
                         <div class="card-body text-center">
                             <h5 class="card-title">Thiago Oliveira</h5>
                             <p class="text-muted">Dev Back-End</p>
-                            <p class="small">Junior</p>
+                            <p class="small">CEO</p>
                         </div>
                     </div>
                 </div>
@@ -195,9 +195,9 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 <!-- Yago Miguel -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card team-card border-0 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                        <img src=""
                              class="card-img-top team-img" 
-                             alt="Yago Miguel">
+                             alt="foto">
                         <div class="card-body text-center">
                             <h5 class="card-title">Yago Miguel</h5>
                             <p class="text-muted">Projetista</p>
@@ -209,9 +209,9 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 <!-- Brenno Ventura -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card team-card border-0 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                        <img src="" 
                              class="card-img-top team-img" 
-                             alt="Brenno Ventura">
+                             alt="Foto">
                         <div class="card-body text-center">
                             <h5 class="card-title">Brenno Ventura</h5>
                             <p class="text-muted">Dev Front-End</p>
@@ -223,9 +223,9 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 <!-- Allan Felipe -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card team-card border-0 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                        <img src="" 
                              class="card-img-top team-img" 
-                             alt="Allan Felipe">
+                             alt="Foto">
                         <div class="card-body text-center">
                             <h5 class="card-title">Allan Felipe</h5>
                             <p class="text-muted">Multifuncional</p>
@@ -237,9 +237,9 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 <!-- Lilian Isadora -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card team-card border-0 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                        <img src="" 
                              class="card-img-top team-img" 
-                             alt="Lilian Isadora">
+                             alt="Foto">
                         <div class="card-body text-center">
                             <h5 class="card-title">Lilian Isadora</h5>
                             <p class="text-muted">Designer</p>
@@ -284,10 +284,10 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 </div>
                 <div class="col-md-6 text-md-end">
                     <p class="small mb-0">
-                        &copy; 2025 Conecta Saúde. Todos os direitos reservados.<br>
+                        &copy; 2026 Conecta Saúde. Todos os direitos reservados.<br>
                         <a href="index.php" class="text-white text-decoration-none">Home</a> | 
                         <a href="sobre.php" class="text-white text-decoration-none">Sobre</a> | 
-                        <a href="contato.php" class="text-white text-decoration-none">Contato</a>
+                        <a href="em desenvolvimento" class="text-white text-decoration-none">Contato</a>
                     </p>
                 </div>
             </div>

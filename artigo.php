@@ -1,7 +1,7 @@
 <?php
 session_start();
-include 'includes/config.php';
 
+// Pegar ID do artigo
 if (!isset($_GET['id'])) {
     header('Location: blog.php');
     exit;
@@ -9,39 +9,121 @@ if (!isset($_GET['id'])) {
 
 $artigo_id = intval($_GET['id']);
 
-// Buscar artigo
-$sql = "SELECT a.*, u.nome as autor_nome, u.especialidade as autor_especialidade 
-        FROM artigos a 
-        JOIN usuarios u ON a.autor_id = u.id 
-        WHERE a.id = ? AND a.status = 'publicado'";
-$stmt = $mysqli->prepare($sql);
-$stmt->bind_param("i", $artigo_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$artigo = $result->fetch_assoc();
+$is_sample = false;
 
-if (!$artigo) {
-    header('Location: blog.php');
-    exit;
+// Se existir conexão com DB, tentar buscar; caso contrário, usar artigos fictícios
+if (isset($mysqli) && $mysqli) {
+    // Buscar artigo no banco
+    $sql = "SELECT a.*, u.nome as autor_nome, u.especialidade as autor_especialidade 
+            FROM artigos a 
+            JOIN usuarios u ON a.autor_id = u.id 
+            WHERE a.id = ? AND a.status = 'publicado'";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("i", $artigo_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $artigo = $result->fetch_assoc();
+
+    if (!$artigo) {
+        header('Location: blog.php');
+        exit;
+    }
+
+    // Incrementar visualizações
+    $sql_update = "UPDATE artigos SET visualizacoes = visualizacoes + 1 WHERE id = ?";
+    $stmt_update = $mysqli->prepare($sql_update);
+    $stmt_update->bind_param("i", $artigo_id);
+    $stmt_update->execute();
+
+    $titulo = $artigo['titulo'] . " - Conecta Saúde Blog";
+
+    // Buscar artigos relacionados
+    $sql_relacionados = "SELECT id, titulo, imagem, data_publicacao 
+                         FROM artigos 
+                         WHERE categoria = ? AND id != ? AND status = 'publicado' 
+                         ORDER BY data_publicacao DESC LIMIT 3";
+    $stmt = $mysqli->prepare($sql_relacionados);
+    $stmt->bind_param("si", $artigo['categoria'], $artigo_id);
+    $stmt->execute();
+    $relacionados = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+} else {
+    // Artigos fictícios para demonstração
+    $is_sample = true;
+    $sample_articles = [
+        1 => [
+            'id' => 1,
+            'titulo' => 'Importância do Check-up Anual',
+            'categoria' => 'Prevenção',
+            'imagem' => 'assets/hero-doctor.jpg',
+            'data_publicacao' => '2026-12-31',
+            'autor_nome' => 'Dr. Carlos Henrique',
+            'autor_especialidade' => 'Clínico Geral',
+            'visualizacoes' => 124,
+            'conteudo' => '<p>Realizar um check-up anual é uma das ações mais importantes para a manutenção da saúde ao longo dos anos. O exame de rotina permite identificar sinais precoces de doenças crônicas, avaliar fatores de risco e estabelecer um plano preventivo personalizado.</p>
+<h2>Por que fazer o check-up?</h2>
+<p>O check-up ajuda a detectar hipertensão, diabetes, alterações de colesterol e problemas renais ou hepáticos ainda em estágio inicial. Com intervenções tempestivas, é possível reduzir complicações e melhorar a qualidade de vida.</p>
+<h3>Exames comuns</h3>
+<ul>
+<li>Hemograma completo</li>
+<li>Glicemia de jejum e hemoglobina glicada</li>
+<li>Perfil lipídico (colesterol total, HDL, LDL, triglicerídeos)</li>
+<li>Função renal (ureia e creatinina)</li>
+<li>Exames de imagem quando indicados (ultrassom, mamografia, etc.)</li>
+</ul>
+<p>Converse com seu médico sobre quais exames são adequados para sua faixa etária e histórico familiar.</p>'
+        ],
+        2 => [
+            'id' => 2,
+            'titulo' => 'Alimentação Saudável no Inverno',
+            'categoria' => 'Nutrição',
+            'imagem' => 'assets/hero-doctor.jpg',
+            'data_publicacao' => '2026-12-20',
+            'autor_nome' => 'Dra. Ana Ribeiro',
+            'autor_especialidade' => 'Nutricionista',
+            'visualizacoes' => 89,
+            'conteudo' => '<p>Nos meses mais frios, é comum buscarmos refeições mais calóricas e reconfortantes. No entanto, manter uma alimentação equilibrada continua sendo essencial para a imunidade e o bem-estar.</p>
+<h2>Dicas práticas</h2>
+<p>Priorize alimentos da estação como abóboras, couves e raízes. Inclua fontes de proteína magra e gorduras saudáveis para manter saciedade e suporte imunológico.</p>
+<h3>Sugestões de refeições</h3>
+<ul>
+<li>Sopa de legumes com frango desfiado</li>
+<li>Ensopado de legumes e grãos integrais</li>
+<li>Salada morna de quinoa com folhas e sementes</li>
+</ul>
+<p>Evite excessos de frituras e açúcar, que podem prejudicar a resposta inflamatória do organismo.</p>'
+        ],
+        3 => [
+            'id' => 3,
+            'titulo' => 'Cuidados com a Saúde Mental',
+            'categoria' => 'Bem-estar',
+            'imagem' => 'assets/hero-doctor.jpg',
+            'data_publicacao' => '2026-12-05',
+            'autor_nome' => 'Psic. Mariana Lopes',
+            'autor_especialidade' => 'Psicóloga Clínica',
+            'visualizacoes' => 203,
+            'conteudo' => '<p>Cuidar da saúde mental é tão importante quanto cuidar da saúde física. Pequenas práticas diárias podem reduzir o estresse e melhorar a qualidade de vida.</p>
+<h2>Práticas recomendadas</h2>
+<ul>
+<li>Exercício físico regular</li>
+<li>Rotina de sono adequada</li>
+<li>Conexão social e suporte</li>
+<li>Buscar apoio profissional quando necessário</li>
+</ul>
+<p>Não hesite em procurar um profissional se sentir sintomas persistentes de ansiedade ou depressão.</p>'
+        ]
+    ];
+
+    if (!isset($sample_articles[$artigo_id])) {
+        header('Location: blog.php');
+        exit;
+    }
+
+    $artigo = $sample_articles[$artigo_id];
+    $titulo = $artigo['titulo'] . " - Conecta Saúde Blog";
+    $relacionados = array_values(array_filter($sample_articles, function($a) use ($artigo_id) { return $a['id'] != $artigo_id; }));
+
 }
-
-// Incrementar visualizações
-$sql_update = "UPDATE artigos SET visualizacoes = visualizacoes + 1 WHERE id = ?";
-$stmt_update = $mysqli->prepare($sql_update);
-$stmt_update->bind_param("i", $artigo_id);
-$stmt_update->execute();
-
-$titulo = $artigo['titulo'] . " - Conecta Saúde Blog";
-
-// Buscar artigos relacionados
-$sql_relacionados = "SELECT id, titulo, imagem, data_publicacao 
-                     FROM artigos 
-                     WHERE categoria = ? AND id != ? AND status = 'publicado' 
-                     ORDER BY data_publicacao DESC LIMIT 3";
-$stmt = $mysqli->prepare($sql_relacionados);
-$stmt->bind_param("si", $artigo['categoria'], $artigo_id);
-$stmt->execute();
-$relacionados = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -151,7 +233,7 @@ $relacionados = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             <!-- Conteúdo Principal -->
             <div class="col-lg-8">
                 <article class="article-content mb-5">
-                    <?php echo nl2br(htmlspecialchars_decode($artigo['conteudo'])); ?>
+                    <?php echo $artigo['conteudo']; ?>
                 </article>
                 
                 <!-- Compartilhar -->

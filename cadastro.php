@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
     $senha_form = $_POST['senha'];
     $confirmar_senha = $_POST['confirmar_senha'];
-    $tipo = $_POST['tipo'] ?? 'paciente';
+    $tipo = $_POST['tipo'] ?? 'agente';
     
     // Upload da foto
     $foto_perfil = 'default.png'; // Foto padrão
@@ -157,7 +157,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="col-md-8">
                 <div class="cadastro-card">
                     <div class="card-header text-center py-3">
-                        <h4 class="mb-0"><i class="bi bi-person-plus"></i> Cadastro</h4>
+                        <h4 class="mb-1"><i class="bi bi-person-plus"></i> Cadastro - Conecta Saúde</h4>
+                        <small class="opacity-75">Para profissionais de saúde e agentes comunitários</small>
                     </div>
                     
                     <div class="card-body p-4">
@@ -192,20 +193,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label class="form-label mb-3"><strong>Você é:</strong></label>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <div class="btn-option <?php echo ($_POST['tipo'] ?? 'paciente') == 'paciente' ? 'active' : ''; ?>" 
-                                             onclick="selectTipo('paciente')">
-                                            <input type="radio" name="tipo" value="paciente" 
-                                                   id="paciente" <?php echo ($_POST['tipo'] ?? 'paciente') == 'paciente' ? 'checked' : ''; ?> 
+                                        <div class="btn-option <?php echo ($_POST['tipo'] ?? 'agente') == 'agente' ? 'active' : ''; ?>" 
+                                             onclick="selectTipo('agente')">
+                                            <input type="radio" name="tipo" value="agente" 
+                                                   id="agente" <?php echo ($_POST['tipo'] ?? 'agente') == 'agente' ? 'checked' : ''; ?> 
                                                    style="display: none;">
-                                            <i class="bi bi-person fs-1 d-block mb-2"></i>
-                                            <strong>Paciente</strong>
+                                            <i class="bi bi-person-check fs-1 d-block mb-2"></i>
+                                            <strong>Agente Comunitário</strong>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <div class="btn-option <?php echo ($_POST['tipo'] ?? 'paciente') == 'medico' ? 'active' : ''; ?>" 
+                                        <div class="btn-option <?php echo ($_POST['tipo'] ?? 'agente') == 'medico' ? 'active' : ''; ?>" 
                                              onclick="selectTipo('medico')">
                                             <input type="radio" name="tipo" value="medico" 
-                                                   id="medico" <?php echo ($_POST['tipo'] ?? 'paciente') == 'medico' ? 'checked' : ''; ?> 
+                                                   id="medico" <?php echo ($_POST['tipo'] ?? 'agente') == 'medico' ? 'checked' : ''; ?> 
                                                    style="display: none;">
                                             <i class="bi bi-heart-pulse fs-1 d-block mb-2"></i>
                                             <strong>Profissional de Saúde</strong>

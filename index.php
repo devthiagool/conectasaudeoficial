@@ -12,10 +12,10 @@ session_start();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <style>
         :root {
-            --primary: #0077b6;
-            --secondary: #00b4d8;
-            --light: #e0f7fa;
-            --dark: #023e8a;
+            --primary: #0ca6ad; /* teal */
+            --secondary: #47c36a; /* green */
+            --light: #e6faf7;
+            --dark: #045b58;
         }
         .hero {
             background: linear-gradient(135deg, var(--light), #ffffff);
@@ -30,8 +30,8 @@ session_start();
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover;
-            opacity: 0.1;
+            background: url('assets/hero-doctor.jpg') center/cover;
+            opacity: 0.12;
             z-index: 0;
         }
         .hero-content {
@@ -114,7 +114,8 @@ session_start();
                             <div class="d-flex align-items-center mb-3">
                                 <?php
                                 $foto = isset($_SESSION['usuario_foto']) ? 'uploads/' . $_SESSION['usuario_foto'] : 'assets/default-avatar.png';
-                                if (!file_exists($foto)) {
+                                $foto_check = isset($_SESSION['usuario_foto']) ? __DIR__ . '/uploads/' . $_SESSION['usuario_foto'] : '';
+                                if (empty($foto_check) || !file_exists($foto_check)) {
                                     $foto = 'assets/default-avatar.png';
                                 }
                                 ?>
@@ -151,9 +152,10 @@ session_start();
                     <?php endif; ?>
                 </div>
                 <div class="col-lg-6">
-                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                    <img src="assets/hero-doctor.jpg" 
                          class="img-fluid rounded-3 shadow-lg" 
-                         alt="Médico atendendo paciente">
+                         alt="Profissional atendendo paciente"
+                         onerror="this.onerror=null;this.src='assets/default-avatar.png';">
                 </div>
             </div>
         </div>
@@ -166,25 +168,21 @@ session_start();
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card feature-card p-4 text-center">
-                        <div class="feature-icon">📅</div>
-                        <h3 class="h4 mb-3">Agendamento Online</h3>
+                        <i class="bi bi-calendar2-check feature-icon"></i>
+                        <h3 class="h4 mb-3">Gerenciamento de Consultas</h3>
                         <p class="text-muted">
-                            Agende consultas com especialistas de forma rápida e prática.
+                            Ferramentas para organizar e acompanhar agendamentos.
                         </p>
-                        <?php if(isset($_SESSION['usuario_id'])): ?>
-                            <a href="agendar.php" class="btn btn-primary mt-3">Agendar Consulta</a>
-                        <?php else: ?>
-                            <a href="cadastro.php" class="btn btn-outline-primary mt-3">Começar Agora</a>
-                        <?php endif; ?>
+                        <a href="blog.php" class="btn btn-outline-primary mt-3">Saiba Mais</a>
                     </div>
                 </div>
                 
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card feature-card p-4 text-center">
-                        <div class="feature-icon">📚</div>
+                        <i class="bi bi-book feature-icon"></i>
                         <h3 class="h4 mb-3">Informações de Saúde</h3>
                         <p class="text-muted">
-                            Acesse artigos e dicas sobre bem-estar e cuidados com a saúde.
+                            Artigos e orientações práticas para o cuidado diário.
                         </p>
                         <a href="blog.php" class="btn btn-outline-primary mt-3">Ler Artigos</a>
                     </div>
@@ -192,10 +190,10 @@ session_start();
                 
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card feature-card p-4 text-center">
-                        <div class="feature-icon">👥</div>
-                        <h3 class="h4 mb-3">Conecte-se</h3>
+                        <i class="bi bi-people feature-icon"></i>
+                        <h3 class="h4 mb-3">Acesso Rápido</h3>
                         <p class="text-muted">
-                            Encontre médicos e pacientes na sua região.
+                            Integração para equipes de saúde e agentes comunitários.
                         </p>
                         <a href="sobre.php" class="btn btn-outline-primary mt-3">Saiba Mais</a>
                     </div>
@@ -213,7 +211,7 @@ session_start();
                     <p class="small">Sua saúde em primeiro lugar.</p>
                 </div>
                 <div class="col-md-6 text-end">
-                    <p class="small mb-0">&copy; 2023 Conecta Saúde. Todos os direitos reservados.</p>
+                    <p class="small mb-0">&copy; 2026 Conecta Saúde. Todos os direitos reservados.</p>
                 </div>
             </div>
         </div>

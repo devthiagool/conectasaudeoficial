@@ -62,15 +62,7 @@ session_start();
                         </ul>
                     </div>
                     <div class="card-footer bg-transparent border-0 text-center pb-4">
-                        <?php if(isset($_SESSION['usuario_id'])): ?>
-                            <a href="agendar.php?servico=online" class="btn btn-success">
-                                <i class="bi bi-calendar-plus me-2"></i>Agendar Consulta
-                            </a>
-                        <?php else: ?>
-                            <a href="cadastro.php" class="btn btn-outline-success">
-                                <i class="bi bi-person-plus me-2"></i>Criar Conta
-                            </a>
-                        <?php endif; ?>
+                        <p class="small text-muted mb-0">Agendamentos são realizados pelo Agente Comunitário através do aplicativo.</p>
                     </div>
                 </div>
             </div>
@@ -94,15 +86,7 @@ session_start();
                         </ul>
                     </div>
                     <div class="card-footer bg-transparent border-0 text-center pb-4">
-                        <?php if(isset($_SESSION['usuario_id'])): ?>
-                            <a href="agendar.php?servico=presencial" class="btn btn-success">
-                                <i class="bi bi-geo-alt me-2"></i>Encontrar Clínica
-                            </a>
-                        <?php else: ?>
-                            <a href="login.php" class="btn btn-outline-success">
-                                <i class="bi bi-box-arrow-in-right me-2"></i>Fazer Login
-                            </a>
-                        <?php endif; ?>
+                        <p class="small text-muted mb-0">Para agendamentos presenciais, contate o Agente Comunitário local.</p>
                     </div>
                 </div>
             </div>
@@ -126,9 +110,7 @@ session_start();
                         </ul>
                     </div>
                     <div class="card-footer bg-transparent border-0 text-center pb-4">
-                        <a href="agendar.php?servico=exames" class="btn btn-success">
-                            <i class="bi bi-search-heart me-2"></i>Ver Exames
-                        </a>
+                        <p class="small text-muted mb-0">Exames e resultados são gerenciados pelo Agente Comunitário e profissionais de saúde.</p>
                     </div>
                 </div>
             </div>
@@ -141,7 +123,7 @@ session_start();
                 <div class="row g-3">
                     <div class="col-md-3 col-6">
                         <div class="p-3 border rounded bg-light text-center">
-                            <i class="bi bi-capsule-pill text-success d-block mb-2 fs-4"></i>
+                            <i class="bi bi-hospital text-success d-block mb-2 fs-4"></i>
                             <span class="small fw-medium">Farmácia Digital</span>
                         </div>
                     </div>
@@ -170,16 +152,25 @@ session_start();
         <!-- Call to Action -->
         <div class="row">
             <div class="col-12">
-                <div class="bg-success text-white rounded-3 p-5 text-center">
-                    <h3 class="mb-3">Comece a Cuidar da Sua Saúde Hoje!</h3>
-                    <p class="mb-4">Cadastre-se gratuitamente e tenha acesso a todos os nossos serviços.</p>
+                    <div class="bg-success text-white rounded-3 p-5 text-center">
+                    <h3 class="mb-3">Agentes e Profissionais: gerenciem agendamentos</h3>
+                    <p class="mb-4">Agentes comunitários e profissionais de saúde podem se cadastrar para acessar o painel de gestão.</p>
                     <div class="d-flex justify-content-center gap-3 flex-wrap">
-                        <a href="cadastro.php" class="btn btn-light btn-lg px-4">
-                            <i class="bi bi-person-plus me-2"></i>Criar Minha Conta
-                        </a>
-                        <a href="sobre.php" class="btn btn-outline-light btn-lg px-4">
-                            <i class="bi bi-info-circle me-2"></i>Conhecer Mais
-                        </a>
+                        <?php if(isset($_SESSION['usuario_id'])): ?>
+                            <a href="dashboard.php" class="btn btn-light btn-lg px-4">
+                                <i class="bi bi-speedometer2 me-2"></i>Meu Dashboard
+                            </a>
+                            <a href="logout.php" class="btn btn-outline-light btn-lg px-4">
+                                <i class="bi bi-box-arrow-right me-2"></i>Sair
+                            </a>
+                        <?php else: ?>
+                            <a href="cadastro.php" class="btn btn-light btn-lg px-4">
+                                <i class="bi bi-person-plus me-2"></i>Cadastre-se como Profissional/Agente
+                            </a>
+                            <a href="sobre.php" class="btn btn-outline-light btn-lg px-4">
+                                <i class="bi bi-info-circle me-2"></i>Conhecer Mais
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

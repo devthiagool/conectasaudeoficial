@@ -90,16 +90,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
         
-        // Salvar perfil
+            // Salvar perfil
         if (empty($erro)) {
             file_put_contents($arquivo_perfil, json_encode($perfil, JSON_PRETTY_PRINT));
             $_SESSION['usuario_nome'] = $perfil['nome'];
             $_SESSION['usuario_email'] = $perfil['email'];
             $_SESSION['usuario_foto'] = $perfil['foto']; // Atualizar sessão com a nova foto
             $sucesso = "✓ Perfil atualizado com sucesso!";
-            
-            // Redirecionar para o index após 2 segundos
-            header("refresh:2; url=index.php");
+
+            // Redirecionar para a própria página de perfil para atualizar a view
+            header('Location: perfil.php');
+            exit;
         }
     }
 }
@@ -221,7 +222,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="avatar-container">
                                 <?php
                                 $foto = '';
-                                if (!empty($perfil['foto']) && file_exists('uploads/' . $perfil['foto'])) {
+                                $foto_file = __DIR__ . '/uploads/' . ($perfil['foto'] ?? '');
+                                if (!empty($perfil['foto']) && file_exists($foto_file)) {
                                     $foto = 'uploads/' . $perfil['foto'];
                                 } else {
                                     $foto = 'assets/default-avatar.png';

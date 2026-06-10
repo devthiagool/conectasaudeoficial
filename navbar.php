@@ -1,12 +1,17 @@
 <?php
-
+// Detect site logo
+$site_logo = 'assets/logo.png';
+$site_logo_exists = file_exists(__DIR__ . '/' . $site_logo) ? $site_logo : null;
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+<nav class="navbar navbar-expand-lg" style="background: linear-gradient(90deg,#0ca6ad,#47c36a);" class="shadow-sm">
     <div class="container">
         <!-- Logo -->
-        <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <span class="ms-2 fw-bold">Conecta Saúde</span>
+        <a class="navbar-brand d-flex align-items-center" href="index.php" style="gap:10px;">
+            <?php if($site_logo_exists): ?>
+                <img src="<?php echo $site_logo; ?>" alt="Conecta Saúde" style="height:34px;">
+            <?php endif; ?>
+            <span class="ms-2 fw-bold" style="color:white;">Conecta Saúde</span>
         </a>
 
         <!-- Botão Mobile -->
@@ -53,9 +58,9 @@
                             <?php
                             $foto = 'assets/default-avatar.png';
                             if (isset($_SESSION['usuario_foto']) && !empty($_SESSION['usuario_foto'])) {
-                                $foto_path = 'uploads/' . $_SESSION['usuario_foto'];
+                                $foto_path = __DIR__ . '/uploads/' . $_SESSION['usuario_foto'];
                                 if (file_exists($foto_path)) {
-                                    $foto = $foto_path;
+                                    $foto = 'uploads/' . $_SESSION['usuario_foto'];
                                 }
                             }
                             ?>
@@ -89,13 +94,6 @@
                                     <i class="bi bi-person"></i> Meu Perfil
                                 </a>
                             </li>
-                            <?php if($_SESSION['usuario_tipo'] == 'paciente'): ?>
-                                <li>
-                                    <a class="dropdown-item" href="agendar.php">
-                                        <i class="bi bi-calendar-plus"></i> Agendar Consulta
-                                    </a>
-                                </li>
-                            <?php endif; ?>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a class="dropdown-item text-danger" href="logout.php">

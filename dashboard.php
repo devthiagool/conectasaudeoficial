@@ -26,6 +26,10 @@ if (isset($_SESSION['usuario_foto']) && !empty($_SESSION['usuario_foto'])) {
     }
 }
 
+// Logo do site (colocar arquivo em assets/logo.png)
+$site_logo = 'assets/logo.png';
+$site_logo_exists = file_exists(__DIR__ . '/' . $site_logo) ? $site_logo : null;
+
 // Carregar consultas do arquivo JSON
 $arquivo_consultas = 'dados/consultas_' . $_SESSION['usuario_id'] . '.json';
 if (!is_dir('dados')) {
@@ -67,10 +71,10 @@ if (file_exists($arquivo_mensagens)) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
     <style>
         :root {
-            --primary: #0077b6;
-            --secondary: #00b4d8;
-            --light: #e0f7fa;
-            --dark: #023e8a;
+            --primary: #0ca6ad; /* teal */
+            --secondary: #47c36a; /* green */
+            --light: #e6faf7;
+            --dark: #045b58;
             --sidebar-width: 250px;
         }
         body {
@@ -159,9 +163,15 @@ if (file_exists($arquivo_mensagens)) {
     <div class="sidebar d-none d-lg-block">
         <div class="p-4">
             <!-- Avatar do Usuário -->
-            <div class="text-center mb-3">
-                <img src="<?php echo $foto; ?>?t=<?php echo time(); ?>" alt="Avatar" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #0077b6;">
-            </div>
+                <div class="text-center mb-3">
+                    <a href="dashboard.php" class="d-block mb-2 brand">
+                        <?php if($site_logo_exists): ?>
+                            <img src="<?php echo $site_logo; ?>" alt="Conecta Saúde" style="height:40px; margin-right:8px; vertical-align:middle;">
+                        <?php endif; ?>
+                        <span style="vertical-align:middle; color:var(--dark); font-weight:600;">Conecta Saúde</span>
+                    </a>
+                    <img src="<?php echo $foto; ?>?t=<?php echo time(); ?>" alt="Avatar" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover; border: 3px solid var(--primary);">
+                </div>
             
             <h5 class="text-center mb-1"><?php echo $usuario['nome']; ?></h5>
             <p class="text-center text-muted small mb-4">
@@ -183,26 +193,21 @@ if (file_exists($arquivo_mensagens)) {
                     </a>
                 </li>
                 
-                <?php if($usuario['tipo'] == 'paciente'): ?>
+                <?php if($usuario['tipo'] == 'medico'): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="agendar.php">
-                            <i class="bi bi-calendar-plus"></i> Agendar Consulta
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="minhas-consultas.php">
-                            <i class="bi bi-calendar-check"></i> Minhas Consultas
-                        </a>
-                    </li>
-                <?php elseif($usuario['tipo'] == 'medico'): ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="agenda-medico.php">
+                        <a class="nav-link" href="agendamedico.php">
                             <i class="bi bi-calendar-week"></i> Minha Agenda
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="meus-pacientes.php">
+                        <a class="nav-link" href="meuspacientes.php">
                             <i class="bi bi-people"></i> Meus Pacientes
+                        </a>
+                    </li>
+                <?php elseif($usuario['tipo'] == 'agente'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="agendamedico.php">
+                            <i class="bi bi-calendar-week"></i> Agenda
                         </a>
                     </li>
                 <?php endif; ?>
@@ -225,11 +230,14 @@ if (file_exists($arquivo_mensagens)) {
     </div>
 
     <!-- Mobile Header -->
-    <nav class="navbar navbar-dark bg-primary d-lg-none">
+            <nav class="navbar" style="background: linear-gradient(90deg,var(--primary),var(--secondary));" class="d-lg-none">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <strong>🏥 Conecta Saúde</strong>
-            </a>
+                    <a class="navbar-brand" href="#" style="color: white; display:flex; align-items:center; gap:8px;">
+                        <?php if($site_logo_exists): ?>
+                            <img src="<?php echo $site_logo; ?>" alt="Conecta Saúde" style="height:28px;">
+                        <?php endif; ?>
+                        <strong style="color:white;">Conecta Saúde</strong>
+                    </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -260,7 +268,11 @@ if (file_exists($arquivo_mensagens)) {
                         <i class="bi bi-person"></i> Meu Perfil
                     </a>
                 </li>
-                <!-- Adicione os outros itens do menu aqui -->
+                <li class="nav-item">
+                    <a class="nav-link" href="mensagens.php">
+                        <i class="bi bi-chat"></i> Mensagens
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php">
                         <i class="bi bi-box-arrow-right"></i> Sair
@@ -285,64 +297,7 @@ if (file_exists($arquivo_mensagens)) {
 
             <!-- Cards de Estatísticas -->
             <div class="row mb-4">
-                <?php if($usuario['tipo'] == 'paciente'): ?>
-                    <div class="col-xl-3 col-md-6 mb-3">
-                        <div class="card text-white stat-card bg-primary">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="card-title">Consultas Agendadas</h6>
-                                        <h2 class="mb-0"><?php echo $total_consultas; ?></h2>
-                                    </div>
-                                    <i class="bi bi-calendar-check fs-1"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-xl-3 col-md-6 mb-3">
-                        <div class="card text-white stat-card bg-success">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="card-title">Consultas Realizadas</h6>
-                                        <h2 class="mb-0"><?php echo $consultas_realizadas; ?></h2>
-                                    </div>
-                                    <i class="bi bi-check-circle fs-1"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-xl-3 col-md-6 mb-3">
-                        <div class="card text-white stat-card bg-warning">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="card-title">Próxima Consulta</h6>
-                                        <h6 class="mb-0">15/01/2024</h6>
-                                    </div>
-                                    <i class="bi bi-clock fs-1"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-xl-3 col-md-6 mb-3">
-                        <div class="card text-white stat-card bg-info">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="card-title">Mensagens</h6>
-                                        <h2 class="mb-0"><?php echo $total_mensagens; ?></h2>
-                                    </div>
-                                    <i class="bi bi-chat fs-1"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                <?php elseif($usuario['tipo'] == 'medico'): ?>
+                <?php if($usuario['tipo'] == 'medico'): ?>
                     <div class="col-xl-3 col-md-6 mb-3">
                         <div class="card text-white stat-card bg-info">
                             <div class="card-body">
@@ -398,6 +353,48 @@ if (file_exists($arquivo_mensagens)) {
                             </div>
                         </div>
                     </div>
+                <?php elseif($usuario['tipo'] == 'agente'): ?>
+                    <div class="col-xl-4 col-md-6 mb-3">
+                        <div class="card text-white stat-card bg-primary">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title">Total Agendamentos</h6>
+                                        <h2 class="mb-0">58</h2>
+                                    </div>
+                                    <i class="bi bi-calendar-check fs-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-4 col-md-6 mb-3">
+                        <div class="card text-white stat-card bg-success">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title">Hoje</h6>
+                                        <h2 class="mb-0">8</h2>
+                                    </div>
+                                    <i class="bi bi-calendar-day fs-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-4 col-md-6 mb-3">
+                        <div class="card text-white stat-card bg-info">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title">Mensagens</h6>
+                                        <h2 class="mb-0"><?php echo $total_mensagens; ?></h2>
+                                    </div>
+                                    <i class="bi bi-chat fs-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <?php endif; ?>
             </div>
 
@@ -408,7 +405,7 @@ if (file_exists($arquivo_mensagens)) {
                         <div class="card-header bg-white">
                             <h5 class="mb-0">
                                 <i class="bi bi-calendar-event"></i>
-                                <?php echo $usuario['tipo'] == 'paciente' ? 'Minhas Consultas' : 'Próximas Consultas'; ?>
+                                            <?php echo $usuario['tipo'] == 'paciente' ? 'Minhas Consultas' : 'Próximas Consultas'; ?>
                             </h5>
                         </div>
                         <div class="card-body">
@@ -494,10 +491,10 @@ if (file_exists($arquivo_mensagens)) {
                                         <i class="bi bi-pencil"></i> Editar Perfil
                                     </a>
                                 <?php else: ?>
-                                    <a href="agenda-medico.php" class="btn btn-outline-primary">
+                                    <a href="agendamedico.php" class="btn btn-outline-primary">
                                         <i class="bi bi-calendar-week"></i> Minha Agenda
                                     </a>
-                                    <a href="meus-pacientes.php" class="btn btn-outline-success">
+                                    <a href="meuspacientes.php" class="btn btn-outline-success">
                                         <i class="bi bi-people"></i> Meus Pacientes
                                     </a>
                                     <a href="mensagens.php" class="btn btn-outline-info">
@@ -534,12 +531,12 @@ if (file_exists($arquivo_mensagens)) {
                     {
                         title: 'Consulta com Dr. Carlos',
                         start: '2024-01-15T14:00:00',
-                        color: '#0077b6'
+                        color: '#0ca6ad'
                     },
                     {
                         title: 'Consulta com Dra. Ana',
                         start: '2024-01-20T10:30:00',
-                        color: '#28a745'
+                        color: '#47c36a'
                     }
                 ]
             });
