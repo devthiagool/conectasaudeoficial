@@ -98,6 +98,40 @@ Esse usuário pode:
 
 Caso necessário, a senha poderá ser redefinida diretamente no banco de dados.
 
+## 8. Importar o esquema SQL (opcional)
+
+Se preferir usar um banco MySQL/MariaDB em vez do armazenamento em JSON, há um arquivo de esquema `database.sql` incluído. Para importar no phpMyAdmin ou via linha de comando:
+
+Via phpMyAdmin:
+
+1. Acesse `http://localhost/phpmyadmin`.
+2. Crie um banco chamado `conecta_saude` (opcional — o script também cria se não existir).
+3. Selecione o banco e vá em "Importar".
+4. Escolha o arquivo `database.sql` e clique em "Executar".
+
+Via linha de comando (Windows PowerShell / CMD):
+
+```bash
+mysql -u root -p < database.sql
+```
+
+Observações:
+- O arquivo contém tabelas para `users`, `profiles`, `consultas`, `mensagens` e `audit_log`, além de alguns registros de exemplo.
+- O usuário administrador já está presente no seed com as credenciais abaixo.
+
+Credenciais do administrador (seed):
+
+- E-mail: admin@conectasaude.com
+- Senha: admin123
+
+Segurança e auditoria:
+
+- As ações administrativas importantes são registradas em `audit_log` quando o sistema utiliza banco (ou em `logs/audit.log` se mantiver o armazenamento em JSON e o helper de auditoria estiver ativo).
+- Se for publicar o repositório, remova senhas reais ou hashes sensíveis; os hashes inclusos são apenas para ambiente de desenvolvimento.
+
+-- 
+Arquivo gerado automaticamente para facilitar o deploy — adapte conforme necessário.
+
 ## Solução de Problemas
 
 ### Erro de conexão com o banco
