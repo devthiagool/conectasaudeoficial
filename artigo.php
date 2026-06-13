@@ -132,7 +132,7 @@ if (isset($mysqli) && $mysqli) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $titulo; ?></title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <style>
@@ -179,7 +179,7 @@ if (isset($mysqli) && $mysqli) {
     </style>
 </head>
 <body>
-    <?php include 'includes/navbar.php'; ?>
+    <?php include_once 'navbar.php'; ?>
     
     <!-- Cabeçalho do Artigo -->
     <section class="article-header">
@@ -240,20 +240,31 @@ if (isset($mysqli) && $mysqli) {
                 <div class="card mb-5">
                     <div class="card-body">
                         <h5 class="card-title text-primary">Compartilhe este artigo</h5>
-                        <div class="share-buttons mt-3">
-                            <a href="#" class="facebook" title="Compartilhar no Facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" class="twitter" title="Compartilhar no Twitter">
-                                <i class="bi bi-twitter"></i>
-                            </a>
-                            <a href="#" class="linkedin" title="Compartilhar no LinkedIn">
-                                <i class="bi bi-linkedin"></i>
-                            </a>
-                            <a href="#" class="whatsapp" title="Compartilhar no WhatsApp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                        </div>
+                                <div class="share-buttons mt-3">
+                                    <?php
+                                        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || 
+                                                    $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+                                        $current_url = $protocol . 
+                                            $_SERVER['HTTP_HOST'] . 
+                                            $_SERVER['REQUEST_URI'];
+                                        $fb = 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode($current_url);
+                                        $tw = 'https://twitter.com/intent/tweet?url=' . urlencode($current_url) . '&text=' . urlencode($artigo['titulo']);
+                                        $li = 'https://www.linkedin.com/shareArticle?mini=true&url=' . urlencode($current_url) . '&title=' . urlencode($artigo['titulo']);
+                                        $wa = 'https://api.whatsapp.com/send?text=' . urlencode($artigo['titulo'] . ' - ' . $current_url);
+                                    ?>
+                                    <a href="<?php echo $fb; ?>" class="facebook" title="Compartilhar no Facebook" target="_blank" rel="noopener">
+                                        <i class="bi bi-facebook"></i>
+                                    </a>
+                                    <a href="<?php echo $tw; ?>" class="twitter" title="Compartilhar no Twitter" target="_blank" rel="noopener">
+                                        <i class="bi bi-twitter"></i>
+                                    </a>
+                                    <a href="<?php echo $li; ?>" class="linkedin" title="Compartilhar no LinkedIn" target="_blank" rel="noopener">
+                                        <i class="bi bi-linkedin"></i>
+                                    </a>
+                                    <a href="<?php echo $wa; ?>" class="whatsapp" title="Compartilhar no WhatsApp" target="_blank" rel="noopener">
+                                        <i class="bi bi-whatsapp"></i>
+                                    </a>
+                                </div>
                     </div>
                 </div>
                 

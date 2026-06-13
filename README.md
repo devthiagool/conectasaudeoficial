@@ -1,166 +1,123 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Tempo de geração: 12/12/2025 às 00:48
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+# Como Executar o Projeto ConectaSaúde
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+## Requisitos
 
+Antes de iniciar, certifique-se de ter instalado:
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+* XAMPP
+* PHP 8.2 ou superior
+* MariaDB/MySQL
+* Navegador Web
 
---
--- Banco de dados: `conecta_saude`
---
+## 1. Instalar o XAMPP
 
--- --------------------------------------------------------
+Baixe e instale o XAMPP através do site oficial:
 
---
--- Estrutura para tabela `agendamentos`
---
+https://www.apachefriends.org/
 
-CREATE TABLE `agendamentos` (
-  `id` int(11) NOT NULL,
-  `paciente_id` int(11) NOT NULL,
-  `medico_id` int(11) NOT NULL,
-  `data_consulta` datetime NOT NULL,
-  `tipo_consulta` enum('presencial','online') DEFAULT 'presencial',
-  `motivo` text DEFAULT NULL,
-  `observacoes` text DEFAULT NULL,
-  `status` enum('agendado','confirmado','realizado','cancelado','pendente') DEFAULT 'agendado',
-  `data_agendamento` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+Após a instalação, abra o Painel de Controle do XAMPP.
 
--- --------------------------------------------------------
+## 2. Iniciar os Serviços
 
---
--- Estrutura para tabela `artigos`
---
+No painel do XAMPP, inicie os seguintes serviços:
 
-CREATE TABLE `artigos` (
-  `id` int(11) NOT NULL,
-  `titulo` varchar(200) NOT NULL,
-  `conteudo` text NOT NULL,
-  `autor_id` int(11) NOT NULL,
-  `categoria` varchar(50) DEFAULT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
-  `visualizacoes` int(11) DEFAULT 0,
-  `status` enum('publicado','rascunho') DEFAULT 'publicado',
-  `data_publicacao` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+* Apache
+* MySQL
 
--- --------------------------------------------------------
+Ambos devem ficar com o status em verde.
 
---
--- Estrutura para tabela `usuarios`
---
+## 3. Copiar os Arquivos do Projeto
 
-CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `senha` varchar(255) NOT NULL,
-  `cpf` varchar(14) DEFAULT NULL,
-  `telefone` varchar(15) DEFAULT NULL,
-  `data_nascimento` date DEFAULT NULL,
-  `tipo` enum('paciente','medico','admin') DEFAULT 'paciente',
-  `especialidade` varchar(100) DEFAULT NULL,
-  `crm` varchar(20) DEFAULT NULL,
-  `endereco` text DEFAULT NULL,
-  `cidade` varchar(50) DEFAULT NULL,
-  `estado` char(2) DEFAULT NULL,
-  `cep` varchar(9) DEFAULT NULL,
-  `foto` varchar(255) DEFAULT 'default.jpg',
-  `status` enum('ativo','inativo','pendente') DEFAULT 'ativo',
-  `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+Copie a pasta do projeto ConectaSaúde para o diretório:
 
---
--- Despejando dados para a tabela `usuarios`
---
+C:\xampp\htdocs\
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `cpf`, `telefone`, `data_nascimento`, `tipo`, `especialidade`, `crm`, `endereco`, `cidade`, `estado`, `cep`, `foto`, `status`, `data_cadastro`) VALUES
-(1, 'Dr. Carlos Silva', 'carlos@medico.com', '$2y$10$YourHashHere', NULL, '(11) 9999-8888', NULL, 'medico', 'Cardiologia', 'CRM-SP 12345', NULL, NULL, NULL, NULL, 'default.jpg', 'ativo', '2025-12-11 22:27:23'),
-(2, 'Dra. Ana Souza', 'ana@medico.com', '$2y$10$YourHashHere', NULL, '(11) 9777-6666', NULL, 'medico', 'Pediatria', 'CRM-SP 67890', NULL, NULL, NULL, NULL, 'default.jpg', 'ativo', '2025-12-11 22:27:23'),
-(3, 'Dr. Roberto Lima', 'roberto@medico.com', '$2y$10$YourHashHere', NULL, '(11) 9555-4444', NULL, 'medico', 'Ortopedia', 'CRM-SP 54321', NULL, NULL, NULL, NULL, 'default.jpg', 'ativo', '2025-12-11 22:27:23'),
-(4, 'Administrador', 'admin@conectasaude.com', '$2y$10$YourHashHere', NULL, NULL, NULL, 'admin', NULL, NULL, NULL, NULL, NULL, NULL, 'default.jpg', 'ativo', '2025-12-11 22:27:24'),
-(5, 'THIAGO GOMES DE OLIVEIRA', 'thiagogomesstudent@gmail.com', '$2y$10$3Tz5k/MNnMKVxQV/GjYyCe.Th5vlm2XLHui49I3lkrJ.jfv0LmL7q', NULL, NULL, NULL, 'paciente', NULL, NULL, NULL, NULL, NULL, NULL, 'default.jpg', 'ativo', '2025-12-11 22:43:18');
+Exemplo:
 
---
--- Índices para tabelas despejadas
---
+C:\xampp\htdocs\conectasaude
 
---
--- Índices de tabela `agendamentos`
---
-ALTER TABLE `agendamentos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `paciente_id` (`paciente_id`),
-  ADD KEY `medico_id` (`medico_id`);
+## 4. Criar o Banco de Dados
 
---
--- Índices de tabela `artigos`
---
-ALTER TABLE `artigos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `autor_id` (`autor_id`);
+1. Abra o navegador.
+2. Acesse:
 
---
--- Índices de tabela `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `cpf` (`cpf`);
+http://localhost/phpmyadmin
 
---
--- AUTO_INCREMENT para tabelas despejadas
---
+3. Clique em "Novo".
+4. Crie um banco de dados chamado:
 
---
--- AUTO_INCREMENT de tabela `agendamentos`
---
-ALTER TABLE `agendamentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+conecta_saude
 
---
--- AUTO_INCREMENT de tabela `artigos`
---
-ALTER TABLE `artigos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+5. Selecione o banco criado.
+6. Clique na aba "Importar".
+7. Selecione o arquivo SQL fornecido com o projeto.
+8. Clique em "Executar".
 
---
--- AUTO_INCREMENT de tabela `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+Após a importação, todas as tabelas e registros iniciais serão criados automaticamente.
 
---
--- Restrições para tabelas despejadas
---
+## 5. Configurar a Conexão com o Banco
 
---
--- Restrições para tabelas `agendamentos`
---
-ALTER TABLE `agendamentos`
-  ADD CONSTRAINT `agendamentos_ibfk_1` FOREIGN KEY (`paciente_id`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `agendamentos_ibfk_2` FOREIGN KEY (`medico_id`) REFERENCES `usuarios` (`id`);
+Abra o arquivo de configuração do banco de dados e verifique as credenciais:
 
---
--- Restrições para tabelas `artigos`
---
-ALTER TABLE `artigos`
-  ADD CONSTRAINT `artigos_ibfk_1` FOREIGN KEY (`autor_id`) REFERENCES `usuarios` (`id`);
-COMMIT;
+Host: localhost
+Banco: conecta_saude
+Usuário: root
+Senha: (vazia por padrão no XAMPP)
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+Exemplo:
+
+```php
+$host = "localhost";
+$dbname = "conecta_saude";
+$user = "root";
+$password = "";
+```
+
+## 6. Executar o Projeto
+
+Com Apache e MySQL em execução, acesse:
+
+http://localhost/conectasaude
+
+A aplicação será carregada automaticamente.
+
+## 7. Usuário Administrador
+
+O sistema possui um usuário administrador pré-cadastrado:
+
+E-mail: admin@conectasaude.com
+Senha: admin123
+
+Tipo: Administrador
+
+Esse usuário pode:
+* Autorizar cadastros de agentes comunitários.
+* Visualizar todos os usuários.
+* Editar dados de usuários.
+* Excluir contas de usuários.
+
+Caso necessário, a senha poderá ser redefinida diretamente no banco de dados.
+
+## Solução de Problemas
+
+### Erro de conexão com o banco
+
+Verifique se:
+
+* O MySQL está iniciado no XAMPP.
+* O banco conecta_saude foi criado corretamente.
+* As credenciais do arquivo de configuração estão corretas. 
+
+### Página não encontrada
+
+Verifique se a pasta do projeto está localizada em:
+
+C:\xampp\htdocs\conectasaude
+
+### Porta 80 ocupada
+
+Caso o Apache não inicie, altere a porta do Apache ou encerre programas que estejam utilizando a porta 80 (IIS, Skype, etc.).
+
+## Licença
+
+Projeto desenvolvido para fins acadêmicos e demonstrativos.

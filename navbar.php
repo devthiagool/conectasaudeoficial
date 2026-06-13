@@ -94,6 +94,13 @@ $site_logo_exists = file_exists(__DIR__ . '/' . $site_logo) ? $site_logo : null;
                                     <i class="bi bi-person"></i> Meu Perfil
                                 </a>
                             </li>
+                            <?php if(isset($_SESSION['usuario_tipo']) && $_SESSION['usuario_tipo'] === 'admin'): ?>
+                            <li>
+                                <a class="dropdown-item" href="admin.php">
+                                    <i class="bi bi-shield-lock"></i> Administração
+                                </a>
+                            </li>
+                            <?php endif; ?>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a class="dropdown-item text-danger" href="logout.php">

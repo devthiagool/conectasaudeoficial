@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once __DIR__ . '/inc/users.php';
+require_once __DIR__ . '/inc/log.php';
 
 $erro = '';
 $sucesso = '';
@@ -38,49 +40,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (strlen($senha_form) < 6) {
         $erro = "A senha deve ter no mínimo 6 caracteres!";
     } else {
-        // Simulação de banco de dados em arquivo JSON
-        $usuarios = [];
-        if (file_exists('usuarios.json')) {
-            $usuarios = json_decode(file_get_contents('usuarios.json'), true);
+        // Use helper for persistent users
+        $existing = find_user_by_email($email);
+        if ($existing) {
+            $erro = "Este e-mail já está cadastrado!";
         }
-        
-        // Verifica se email já existe
-        foreach ($usuarios as $usuario) {
-            if ($usuario['email'] == $email) {
-                $erro = "Este e-mail já está cadastrado!";
-                break;
-            }
-        }
-        
+
         if (empty($erro)) {
-            // Cria novo usuário
+            $status = $tipo === 'agente' ? 'pendente' : 'aprovado';
             $novo_usuario = [
                 'id' => uniqid(),
                 'nome' => $nome,
                 'email' => $email,
                 'senha' => password_hash($senha_form, PASSWORD_DEFAULT),
                 'tipo' => $tipo,
+                'status' => $status,
                 'foto' => $foto_perfil,
                 'data_cadastro' => date('Y-m-d H:i:s')
             ];
-            
-            $usuarios[] = $novo_usuario;
-            file_put_contents('usuarios.json', json_encode($usuarios, JSON_PRETTY_PRINT));
-            
-            // Login automático
-            $_SESSION['usuario_id'] = $novo_usuario['id'];
-            $_SESSION['usuario_nome'] = $novo_usuario['nome'];
-            $_SESSION['usuario_email'] = $novo_usuario['email'];
-            $_SESSION['usuario_tipo'] = $novo_usuario['tipo'];
-            $_SESSION['usuario_foto'] = $novo_usuario['foto'];
-            
-            $sucesso = "Cadastro realizado com sucesso! Você será redirecionado.";
-            
-            echo "<script>
-                setTimeout(function() {
-                    window.location.href = 'index.php';
-                }, 2000);
-            </script>";
+
+            if (add_user($novo_usuario)) {
+                audit_log('user_created', $novo_usuario['email'] . ' type=' . $novo_usuario['tipo']);
+                if ($status === 'pendente') {
+                    $sucesso = "Cadastro enviado para análise. Aguarde a autorização do administrador.";
+                    echo "<script>
+                        setTimeout(function() {
+                            window.location.href = 'login.php';
+                        }, 3000);
+                    </script>";
+                } else {
+                    // Login automático
+                    $_SESSION['usuario_id'] = $novo_usuario['id'];
+                    $_SESSION['usuario_nome'] = $novo_usuario['nome'];
+                    $_SESSION['usuario_email'] = $novo_usuario['email'];
+                    $_SESSION['usuario_tipo'] = $novo_usuario['tipo'];
+                    $_SESSION['usuario_foto'] = $novo_usuario['foto'];
+
+                    $sucesso = "Cadastro realizado com sucesso! Você será redirecionado.";
+                    echo "<script>
+                        setTimeout(function() {
+                            window.location.href = 'index.php';
+                        }, 2000);
+                    </script>";
+                }
+            } else {
+                $erro = "Erro ao salvar usuário. Tente novamente.";
+            }
         }
     }
 }
@@ -213,6 +218,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         </div>
                                     </div>
                                 </div>
+                                <div class="alert alert-info small">
+                                    Agentes comunitários serão aprovados pelo administrador antes de usar o sistema.
+                                </div>
                             </div>
                             
                             <div class="row">
@@ -248,8 +256,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="mb-4 form-check">
                                 <input type="checkbox" class="form-check-input" id="termos" required>
                                 <label class="form-check-label" for="termos">
-                                    Aceito os <a href="#" data-bs-toggle="modal" data-bs-target="#termosModal">Termos de Uso</a> 
-                                    e <a href="#">Política de Privacidade</a>
+                                    Aceito os <a href="termos-uso.php" target="_blank">Termos de Uso</a>
+                                    e <a href="politica-privacidade.php" target="_blank">Política de Privacidade</a>
                                 </label>
                             </div>
                             

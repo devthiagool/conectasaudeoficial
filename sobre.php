@@ -180,14 +180,14 @@ $titulo = "Sobre Nós - Conecta Saúde";
             <div class="row justify-content-center">
                 <!-- Thiago Oliveira -->
                 <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card team-card border-0 shadow-sm">
-                        <img src="" 
-                             class="card-img-top team-img" 
-                             alt="Foto">
+                        <div class="card team-card border-0 shadow-sm">
+                            <img src="assets/Thiago.jpg" 
+                                class="card-img-top team-img" 
+                                alt="Thiago Oliveira">
                         <div class="card-body text-center">
                             <h5 class="card-title">Thiago Oliveira</h5>
                             <p class="text-muted">Dev Back-End</p>
-                            <p class="small">CEO</p>
+                            <p class="small">Coordenador Técnico</p>
                         </div>
                     </div>
                 </div>
@@ -195,13 +195,13 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 <!-- Yago Miguel -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card team-card border-0 shadow-sm">
-                        <img src=""
+                        <img src="assets/Yago Miguel.jpg"
                              class="card-img-top team-img" 
-                             alt="foto">
+                             alt="Yago Miguel">
                         <div class="card-body text-center">
                             <h5 class="card-title">Yago Miguel</h5>
                             <p class="text-muted">Projetista</p>
-                            <p class="small">CEO</p>
+                            <p class="small">Arquiteto de Soluções</p>
                         </div>
                     </div>
                 </div>
@@ -209,9 +209,9 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 <!-- Brenno Ventura -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card team-card border-0 shadow-sm">
-                        <img src="" 
+                        <img src="assets/Brenno Carlos.jpg" 
                              class="card-img-top team-img" 
-                             alt="Foto">
+                             alt="Brenno Ventura">
                         <div class="card-body text-center">
                             <h5 class="card-title">Brenno Ventura</h5>
                             <p class="text-muted">Dev Front-End</p>
@@ -223,9 +223,9 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 <!-- Allan Felipe -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card team-card border-0 shadow-sm">
-                        <img src="" 
+                        <img src="assets/Allan Felipe .jpg" 
                              class="card-img-top team-img" 
-                             alt="Foto">
+                             alt="Allan Felipe">
                         <div class="card-body text-center">
                             <h5 class="card-title">Allan Felipe</h5>
                             <p class="text-muted">Multifuncional</p>
@@ -237,9 +237,9 @@ $titulo = "Sobre Nós - Conecta Saúde";
                 <!-- Lilian Isadora -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card team-card border-0 shadow-sm">
-                        <img src="" 
+                        <img src="assets/Lilian Isadora.jpg" 
                              class="card-img-top team-img" 
-                             alt="Foto">
+                             alt="Lilian Isadora">
                         <div class="card-body text-center">
                             <h5 class="card-title">Lilian Isadora</h5>
                             <p class="text-muted">Designer</p>
@@ -287,7 +287,7 @@ $titulo = "Sobre Nós - Conecta Saúde";
                         &copy; 2026 Conecta Saúde. Todos os direitos reservados.<br>
                         <a href="index.php" class="text-white text-decoration-none">Home</a> | 
                         <a href="sobre.php" class="text-white text-decoration-none">Sobre</a> | 
-                        <a href="em desenvolvimento" class="text-white text-decoration-none">Contato</a>
+                        <a href="contato.php" class="text-white text-decoration-none">Contato</a>
                     </p>
                 </div>
             </div>

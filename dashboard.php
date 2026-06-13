@@ -58,6 +58,21 @@ if (file_exists($arquivo_mensagens)) {
     $mensagens = json_decode(file_get_contents($arquivo_mensagens), true) ?? [];
     $total_mensagens = count($mensagens);
 }
+
+$usuarios_sistema = [];
+$total_usuarios = 0;
+$total_agentes = 0;
+$total_medicos = 0;
+$total_admins = 0;
+$total_pendentes = 0;
+if ($usuario['tipo'] === 'admin' && file_exists('usuarios.json')) {
+    $usuarios_sistema = json_decode(file_get_contents('usuarios.json'), true) ?? [];
+    $total_usuarios = count($usuarios_sistema);
+    $total_agentes = count(array_filter($usuarios_sistema, fn($u) => $u['tipo'] === 'agente'));
+    $total_medicos = count(array_filter($usuarios_sistema, fn($u) => $u['tipo'] === 'medico'));
+    $total_admins = count(array_filter($usuarios_sistema, fn($u) => $u['tipo'] === 'admin'));
+    $total_pendentes = count(array_filter($usuarios_sistema, fn($u) => isset($u['status']) && $u['status'] === 'pendente'));
+}
 ?>
 
 <!DOCTYPE html>
@@ -175,7 +190,15 @@ if (file_exists($arquivo_mensagens)) {
             
             <h5 class="text-center mb-1"><?php echo $usuario['nome']; ?></h5>
             <p class="text-center text-muted small mb-4">
-                <span class="badge bg-<?php echo $usuario['tipo'] == 'medico' ? 'info' : 'success'; ?>">
+                <?php
+                    $badgeClass = 'success';
+                    if ($usuario['tipo'] == 'medico') {
+                        $badgeClass = 'info';
+                    } elseif ($usuario['tipo'] == 'admin') {
+                        $badgeClass = 'primary';
+                    }
+                ?>
+                <span class="badge bg-<?php echo $badgeClass; ?>">
                     <?php echo ucfirst($usuario['tipo']); ?>
                 </span>
             </p>
@@ -210,7 +233,17 @@ if (file_exists($arquivo_mensagens)) {
                             <i class="bi bi-calendar-week"></i> Agenda
                         </a>
                     </li>
-                <?php endif; ?>
+                <?php elseif($usuario['tipo'] == 'admin'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.php">
+                            <i class="bi bi-shield-lock"></i> Administração
+                        </a>
+                    </li>                <?php elseif($usuario['tipo'] == 'admin'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.php">
+                            <i class="bi bi-shield-lock"></i> Administração
+                        </a>
+                    </li>                <?php endif; ?>
                 
                 <li class="nav-item">
                     <a class="nav-link" href="mensagens.php">
@@ -232,7 +265,7 @@ if (file_exists($arquivo_mensagens)) {
     <!-- Mobile Header -->
             <nav class="navbar" style="background: linear-gradient(90deg,var(--primary),var(--secondary));" class="d-lg-none">
         <div class="container-fluid">
-                    <a class="navbar-brand" href="#" style="color: white; display:flex; align-items:center; gap:8px;">
+                    <a class="navbar-brand" href="index.php" style="color: white; display:flex; align-items:center; gap:8px;">
                         <?php if($site_logo_exists): ?>
                             <img src="<?php echo $site_logo; ?>" alt="Conecta Saúde" style="height:28px;">
                         <?php endif; ?>
@@ -268,6 +301,13 @@ if (file_exists($arquivo_mensagens)) {
                         <i class="bi bi-person"></i> Meu Perfil
                     </a>
                 </li>
+                <?php if($usuario['tipo'] === 'admin'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.php">
+                            <i class="bi bi-shield-lock"></i> Administração
+                        </a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="mensagens.php">
                         <i class="bi bi-chat"></i> Mensagens
@@ -395,6 +435,59 @@ if (file_exists($arquivo_mensagens)) {
                             </div>
                         </div>
                     </div>
+                <?php elseif ($usuario['tipo'] === 'admin'): ?>
+                    <div class="col-xl-3 col-md-6 mb-3">
+                        <div class="card text-white stat-card bg-primary">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title">Usuários</h6>
+                                        <h2 class="mb-0"><?php echo $total_usuarios; ?></h2>
+                                    </div>
+                                    <i class="bi bi-people-fill fs-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-3">
+                        <div class="card text-white stat-card bg-success">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title">Agentes</h6>
+                                        <h2 class="mb-0"><?php echo $total_agentes; ?></h2>
+                                    </div>
+                                    <i class="bi bi-person-lines-fill fs-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-3">
+                        <div class="card text-white stat-card bg-info">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title">Profissionais</h6>
+                                        <h2 class="mb-0"><?php echo $total_medicos; ?></h2>
+                                    </div>
+                                    <i class="bi bi-stethoscope fs-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-3">
+                        <div class="card text-white stat-card bg-warning">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title">Pendente</h6>
+                                        <h2 class="mb-0"><?php echo $total_pendentes; ?></h2>
+                                    </div>
+                                    <i class="bi bi-clock-history fs-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <?php endif; ?>
             </div>
 
@@ -489,6 +582,16 @@ if (file_exists($arquivo_mensagens)) {
                                     </a>
                                     <a href="perfil.php" class="btn btn-outline-info">
                                         <i class="bi bi-pencil"></i> Editar Perfil
+                                    </a>
+                                <?php elseif ($usuario['tipo'] === 'admin'): ?>
+                                    <a href="admin.php" class="btn btn-outline-primary">
+                                        <i class="bi bi-shield-lock"></i> Painel Administrativo
+                                    </a>
+                                    <a href="perfil.php" class="btn btn-outline-success">
+                                        <i class="bi bi-person"></i> Meu Perfil
+                                    </a>
+                                    <a href="mensagens.php" class="btn btn-outline-info">
+                                        <i class="bi bi-chat"></i> Mensagens
                                     </a>
                                 <?php else: ?>
                                     <a href="agendamedico.php" class="btn btn-outline-primary">

@@ -1,6 +1,8 @@
 <?php
 // Inicia sessão no TOPO do arquivo
 session_start();
+require_once __DIR__ . '/inc/users.php';
+require_once __DIR__ . '/inc/log.php';
 
 $erro = '';
 
@@ -18,26 +20,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $usuarios = json_decode(file_get_contents('usuarios.json'), true);
             
             // Buscar usuário por email
-            $usuario_encontrado = null;
-            foreach ($usuarios as $user) {
-                if ($user['email'] === $email) {
-                    $usuario_encontrado = $user;
-                    break;
-                }
-            }
-            
+            $usuario_encontrado = find_user_by_email($email);
             if ($usuario_encontrado) {
-                // Verificar senha
-                if (password_verify($senha_form, $usuario_encontrado['senha'])) {
+                if (isset($usuario_encontrado['status']) && $usuario_encontrado['status'] !== 'aprovado') {
+                    if ($usuario_encontrado['status'] === 'pendente') {
+                        $erro = "Cadastro em análise. Aguarde a aprovação do administrador.";
+                    } else {
+                        $erro = "Conta não autorizada. Contate o administrador.";
+                    }
+                } elseif (password_verify($senha_form, $usuario_encontrado['senha'])) {
                     $_SESSION['usuario_id'] = $usuario_encontrado['id'];
                     $_SESSION['usuario_nome'] = $usuario_encontrado['nome'];
                     $_SESSION['usuario_email'] = $usuario_encontrado['email'];
                     $_SESSION['usuario_tipo'] = $usuario_encontrado['tipo'];
                     $_SESSION['usuario_foto'] = $usuario_encontrado['foto'] ?? 'default.png';
-                    
+                    audit_log('login_success', $usuario_encontrado['email']);
                     header('Location: dashboard.php');
                     exit;
                 } else {
+                    audit_log('login_failed', $email);
                     $erro = "Senha incorreta!";
                 }
             } else {
@@ -155,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <button type="submit" class="btn btn-primary w-100 mb-3">Entrar</button>
                     
                     <div class="text-center mb-3">
-                        <a href="#" style="text-decoration: none;">Esqueci minha senha</a>
+                        <a href="contato.php" style="text-decoration: none;">Esqueci minha senha</a>
                     </div>
                     
                     <hr>

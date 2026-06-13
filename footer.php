@@ -3,9 +3,9 @@
         <div style="text-align: center;">
             <p style="margin-bottom: 10px;">&copy; 2026 Conecta Saúde. Todos os direitos reservados.</p>
             <p style="margin-bottom: 10px; font-size: 0.9rem;">Plataforma de saúde digital</p>
-            <div>
-                <a href="#" style="color: white; margin: 0 10px; text-decoration: none;">Termos de Uso</a> | 
-                <a href="#" style="color: white; margin: 0 10px; text-decoration: none;">Política de Privacidade</a> | 
+                <div>
+                <a href="termos-uso.php" style="color: white; margin: 0 10px; text-decoration: none;">Termos de Uso</a> | 
+                <a href="politica-privacidade.php" style="color: white; margin: 0 10px; text-decoration: none;">Política de Privacidade</a> | 
                 <a href="contato.php" style="color: white; margin: 0 10px; text-decoration: none;">Contato</a>
             </div>
         </div>

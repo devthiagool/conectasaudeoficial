@@ -1,29 +1,22 @@
 [
     {
-        "id": "698615eb865c1",
-        "nome": "zoiin zoiao2",
-        "email": "zoinzoiao2@gmail.com",
-        "senha": "$2y$10$hbaV7Ir7TdmPtLlDV66YoOOjynVjcFPqpAIMqeYDW6dad6N6ljm8m",
-        "tipo": "medico",
-        "foto": "698615eb86545.png",
-        "data_cadastro": "2026-02-06 16:25:15"
-    },
-    {
         "id": "6986235079794",
         "nome": "miguel",
         "email": "miguel@gmail.com",
         "senha": "$2y$10$bQG5\/nuawufghaM8UxbcCOMuTlq656XK0aPN7RVviiGkPiUZiiwY2",
         "tipo": "medico",
+        "status": "aprovado",
         "foto": "default.png",
         "data_cadastro": "2026-02-06 17:22:24"
     },
     {
-        "id": "6a2941688e500",
-        "nome": "teste",
-        "email": "agentecomunitario@gmail.com",
-        "senha": "$2y$10$nVyPmGWXCRQRq5qxFQeAu.y1Hz70adbpHy9DyrLP2yDrdKLutHo3W",
-        "tipo": "agente",
-        "foto": "6a2941688e41f.jpg",
-        "data_cadastro": "2026-06-10 10:50:16"
+        "id": "admin000000000",
+        "nome": "Administrador Conecta Sa\u00fade",
+        "email": "admin@conectasaude.com",
+        "senha": "$2y$10$GJGkuqEKRDHfq08QuPFoT.Nld9J480azRfmJqJNVMXh3O5XMKwZRu",
+        "tipo": "admin",
+        "status": "aprovado",
+        "foto": "default.png",
+        "data_cadastro": "2026-06-13 00:00:00"
     }
 ]
