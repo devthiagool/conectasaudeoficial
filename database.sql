@@ -81,7 +81,7 @@ ON DUPLICATE KEY UPDATE nome=VALUES(nome);
 
 -- Example profile
 INSERT INTO profiles (id, user_id, nome, email, tipo, telefone, data_nascimento, cpf, endereco, cidade, estado, cep, foto) VALUES
-('6984c142d1b90', NULL, 'zoin zoiao', 'zoinzoiao@hotmail.com', 'paciente', '', '2026-03-07', '10823925374', 'rua da chiquinha e do chaves', 'pacajus', 'CE', '62870-000', '6984c142d1b90_1770311804.png')
+('6984c142d1b90', NULL, 'zoin zoiao', 'zoinzoiao@hotmail.com', 'paciente', '', '2026-03-07', '00000000000', 'rua da chiquinha e do chaves', 'pacajus', 'CE', '62870-000', '6984c142d1b90_1770311804.png')
 ON DUPLICATE KEY UPDATE nome=VALUES(nome);
 
 -- Example consultas (three sample entries)
